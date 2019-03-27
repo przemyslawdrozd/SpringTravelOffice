@@ -24,20 +24,20 @@ public class TravelOfficeController {
         return travelOfficeService.addCustomer(new Customer(name));
     }
 
-    @GetMapping("/")
+    @GetMapping("/getCustomer")
     Customer getCustomerFromGET(@RequestParam String name) {
         Customer customer = new Customer(name);
         customer.setName(customer.getName().toLowerCase());
         return customer;
     }
 
-    @PostMapping("/")
+    @PostMapping("/addCustomer")
     Customer getCustomerFromPOST(@RequestBody Customer customer) {
         customer.setName(customer.getName().toUpperCase());
         return customer;
     }
 
-    @GetMapping("")
+    @GetMapping("/getTrip")
     AbroadTrip getAbroadTripGET(@RequestParam String destination,
                                 @RequestParam LocalDate start,
                                 @RequestParam LocalDate end,
@@ -47,11 +47,13 @@ public class TravelOfficeController {
         return abroadTrip;
     }
 
-    @PostMapping("")
+    @PostMapping("/addTrip")
     AbroadTrip setAbroadTripSET(@RequestParam AbroadTrip abroadTrip) {
         this.travelOfficeService.addTrip(abroadTrip.getDestination(), abroadTrip);
         return abroadTrip;
     }
+
+
 
 //    @GetMapping("/")
 //    Address getAddressFromGET(@RequestParam String street,
