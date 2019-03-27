@@ -1,7 +1,13 @@
 package springtraveloffice.demo.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import springtraveloffice.demo.models.trips.Trip;
 
+@Setter
+@Getter
+@AllArgsConstructor
 public class Customer {
 
     private String name;

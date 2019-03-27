@@ -14,17 +14,6 @@ public class TravelOffice {
     private HashSet<Customer> customers = new HashSet<>();
     private HashMap<String, Trip> trips = new HashMap<>();
 
-    public HashSet<Address> getAddresses() {
-        return addresses;
-    }
-
-    public Address addAddress(Address address){
-        this.addresses.add(address);
-        return address;
-    }
-
-    private HashSet<Address> addresses = new HashSet<>();
-
     public void addTrip(String tripName, Trip trip) {
         trips.put(tripName, trip);
     }

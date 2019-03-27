@@ -31,4 +31,16 @@ public class Trip {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public LocalDate getStart() {
+        return start;
+    }
+
+    public LocalDate getEnd() {
+        return end;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
 }
