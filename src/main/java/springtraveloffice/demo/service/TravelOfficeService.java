@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 import springtraveloffice.demo.models.Customer;
 import springtraveloffice.demo.models.TravelOffice;
 import springtraveloffice.demo.models.exceptions.NoSuchCustomerException;
+import springtraveloffice.demo.models.exceptions.NoSuchTripException;
 import springtraveloffice.demo.models.trips.Trip;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 @Service
 public class TravelOfficeService {
@@ -27,5 +31,25 @@ public class TravelOfficeService {
 
     public String getCustomerCount(){
         return travelOffice.getCustomerCount();
+    }
+
+    public boolean removeCustomer(Customer customer) throws NoSuchCustomerException {
+        return travelOffice.removeCustomer(customer);
+    }
+
+    public boolean removeTrip(String tripName) throws NoSuchTripException {
+        return travelOffice.removeTrip(tripName);
+    }
+
+    public HashSet<Customer> customerList() {
+        return travelOffice.getCustomers();
+    }
+
+    public HashMap<String, Trip> trips () {
+        return travelOffice.getTrips();
+    }
+
+    public Trip findTripByDestiny(String name) {
+         return travelOffice.findTripByDestiny(name);
     }
 }

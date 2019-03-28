@@ -3,7 +3,12 @@ package springtraveloffice.demo.models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 import springtraveloffice.demo.models.trips.Trip;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+
 
 @Setter
 @Getter

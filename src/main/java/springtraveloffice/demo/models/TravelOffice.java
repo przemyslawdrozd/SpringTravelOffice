@@ -18,6 +18,10 @@ public class TravelOffice {
         return trips.put(tripName, trip);
     }
 
+    public Trip findTripByDestiny(String destiny) {
+        return trips.get(destiny);
+    }
+
     public boolean removeTrip(String tripName) throws NoSuchTripException {
         if (trips.containsKey(tripName)) {
             trips.remove(tripName);

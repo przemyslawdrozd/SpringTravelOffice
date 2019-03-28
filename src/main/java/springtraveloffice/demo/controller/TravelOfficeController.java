@@ -1,56 +1,55 @@
 package springtraveloffice.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import springtraveloffice.demo.models.Address;
 import springtraveloffice.demo.models.Customer;
 import springtraveloffice.demo.models.exceptions.NoSuchCustomerException;
-import springtraveloffice.demo.models.trips.AbroadTrip;
+import springtraveloffice.demo.models.exceptions.NoSuchTripException;
+import springtraveloffice.demo.models.trips.Trip;
 import springtraveloffice.demo.service.TravelOfficeService;
 
-import java.time.LocalDate;
+import java.util.*;
 
 @RestController
 @EnableSwagger2
 public class TravelOfficeController {
 
-    @Autowired
-    TravelOfficeService travelOfficeService;
+    private TravelOfficeService travelOfficeService;
 
-    @GetMapping("/addCustomer/{name}")
-    public Customer addCustomer(@PathVariable("name") String name) {
-        return travelOfficeService.addCustomer(new Customer(name));
+    @Autowired
+    public TravelOfficeController(TravelOfficeService travelOfficeService) {
+        this.travelOfficeService = travelOfficeService;
     }
 
     @GetMapping("/getCustomer")
-    Customer getCustomerFromGET(@RequestParam String name) {
+    public Customer getCustomerFromGET(@RequestParam String name) {
         Customer customer = new Customer(name);
         customer.setName(customer.getName().toLowerCase());
         return customer;
     }
 
     @PostMapping("/addCustomer")
-    Customer getCustomerFromPOST(@RequestBody Customer customer) {
+    public Customer getCustomerFromPOST(@RequestBody Customer customer) {
         customer.setName(customer.getName().toUpperCase());
+        travelOfficeService.addCustomer(customer);
         return customer;
     }
 
-    @GetMapping("/getTrip")
-    AbroadTrip getAbroadTripGET(@RequestParam String destination,
-                                @RequestParam LocalDate start,
-                                @RequestParam LocalDate end,
-                                @RequestParam int insurance,
-                                @RequestParam int price) {
-        AbroadTrip abroadTrip = new AbroadTrip(start, end, destination, insurance, price);
-        return abroadTrip;
+    @GetMapping("/getTrips")
+    public HashMap<String, Trip> getTripFromGET() {
+        return travelOfficeService.trips();
     }
 
     @PostMapping("/addTrip")
-    AbroadTrip setAbroadTripSET(@RequestParam AbroadTrip abroadTrip) {
-        this.travelOfficeService.addTrip(abroadTrip.getDestination(), abroadTrip);
-        return abroadTrip;
+    public Trip setTripSET(@RequestBody Trip trip) {
+        this.travelOfficeService.addTrip(trip.getDestination(), trip);
+        return trip;
+    }
+
+    @GetMapping("/trip/{name}")
+    public Trip findTripByDestiny(@PathVariable String name) {
+        return this.travelOfficeService.findTripByDestiny(name);
     }
 
     @GetMapping("/customer/{name}")
@@ -59,7 +58,18 @@ public class TravelOfficeController {
     }
 
     @GetMapping("/customers")
-    public String getCustomerCount() {
-        return travelOfficeService.getCustomerCount();
+    public List<HashSet<Customer>> getCustomers() {
+        return Collections.singletonList(travelOfficeService.customerList());
+    }
+
+    @DeleteMapping("/remove_customer/{name}")
+    public boolean deleteCustomerByName(@PathVariable("name") String name) throws NoSuchCustomerException {
+        Customer c = findCustomerByName(name);
+        return travelOfficeService.removeCustomer(c);
+    }
+
+    @DeleteMapping("/remove_trip/{name}")
+    public boolean removeTrip(@PathVariable("name") String name) throws NoSuchTripException {
+        return travelOfficeService.removeTrip(name);
     }
 }
