@@ -23,6 +23,11 @@ public class Customer {
         this.name = name;
     }
 
+    public Customer(){
+    }
+
+
+
     public void setAddress(Address address) {
         this.address = address;
     }

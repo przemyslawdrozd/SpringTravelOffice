@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import springtraveloffice.demo.models.Customer;
+import springtraveloffice.demo.models.exceptions.NoSuchCustomerException;
 import springtraveloffice.demo.models.trips.AbroadTrip;
 import springtraveloffice.demo.service.TravelOfficeService;
 
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
-public class DemoApplicationTests {
+public class DemoApplicationServiceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -72,6 +73,35 @@ public class DemoApplicationTests {
                 .andReturn();
 
         verify(travelOfficeService).addCustomer(customer);
+    }
+
+    @Test
+    public void removeCustomer() throws Exception {
+        Customer customer = new Customer("Tom");
+        travelOfficeService.addCustomer(customer);
+
+        when(travelOfficeService.removeCustomer(customer))
+                .thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/remove_customer/Tom")
+        .accept(MediaType.APPLICATION_JSON))
+                .andReturn();
+    }
+
+    @Test
+    public void removeTrip() throws Exception {
+
+        LocalDate localDate = LocalDate.of(2000, 10, 10);
+        AbroadTrip trip = new AbroadTrip(localDate, localDate, "Italy", 200, 1500);
+        String dest = trip.getDestination();
+        travelOfficeService.addTrip(dest, trip);
+
+        when(travelOfficeService.removeTrip(dest))
+                .thenReturn(true);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/remove_customer/Italy")
+                .accept(MediaType.APPLICATION_JSON))
+                .andReturn();
     }
 
     @Test
