@@ -13,8 +13,8 @@ public class TravelOfficeService {
     @Autowired
     private TravelOffice travelOffice;
 
-    public void addTrip(String tripName, Trip trip) {
-        travelOffice.addTrip(tripName, trip);
+    public Trip addTrip(String tripName, Trip trip) {
+        return travelOffice.addTrip(tripName, trip);
     }
 
     public Customer addCustomer(Customer customer){

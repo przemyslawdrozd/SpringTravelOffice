@@ -14,8 +14,8 @@ public class TravelOffice {
     private HashSet<Customer> customers = new HashSet<>();
     private HashMap<String, Trip> trips = new HashMap<>();
 
-    public void addTrip(String tripName, Trip trip) {
-        trips.put(tripName, trip);
+    public Trip addTrip(String tripName, Trip trip) {
+        return trips.put(tripName, trip);
     }
 
     public boolean removeTrip(String tripName) throws NoSuchTripException {

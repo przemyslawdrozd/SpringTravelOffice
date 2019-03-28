@@ -53,24 +53,6 @@ public class TravelOfficeController {
         return abroadTrip;
     }
 
-
-
-//    @GetMapping("/")
-//    Address getAddressFromGET(@RequestParam String street,
-//                              @RequestParam String zip,
-//                              @RequestParam String city) {
-//        Address address = new Address(street, zip, city);
-//        return address;
-//    }
-//
-//    @PostMapping("/")
-//    Address getAddressFromPOST(@RequestBody Address address) {
-//        address.setStreet(address.getStreet().toLowerCase());
-//        address.setZip(address.getZip().toLowerCase());
-//        address.setCity(address.getCity());
-//        return address;
-//    }
-
     @GetMapping("/customer/{name}")
     public Customer findCustomerByName(@PathVariable("name") String name) throws NoSuchCustomerException {
         return travelOfficeService.findCustomerByName(name);
